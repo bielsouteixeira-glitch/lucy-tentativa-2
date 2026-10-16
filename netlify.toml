@@ -1,0 +1,31 @@
+# Configuração de publicação — Lu Corrêa Animal Care
+# Use este arquivo quando o site for conectado ao Netlify via Git/CLI.
+# Para upload manual (drag & drop), envie a pasta/ZIP já compilada (`out/`).
+
+[build]
+  command = "STATIC_EXPORT=1 npm run build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NPM_FLAGS = "--no-audit --no-fund"
+  STATIC_EXPORT = "1"
+
+# Cache longo para assets versionados pelo Next.js
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Fotografias, logotipo, pôsteres e vídeos originais
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
